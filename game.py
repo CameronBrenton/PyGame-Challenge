@@ -5,6 +5,15 @@
 #
 VERSION = "0.1"
 
-cameron = 1
-
-print(cameron)
+try:
+    import sys
+    import random
+    import math
+    import os
+    import getopt
+    import pygame
+    from socket import *
+    from pygame.locals import *
+except ImportError as err:
+    print(f"couldn't load module. {err}")
+    sys.exit(2)
