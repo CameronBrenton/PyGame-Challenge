@@ -7,13 +7,27 @@ VERSION = "0.1"
 
 try:
     import sys
-    import random
-    import math
-    import os
-    import getopt
     import pygame
-    from socket import *
-    from pygame.locals import *
 except ImportError as err:
     print(f"couldn't load module. {err}")
     sys.exit(2)
+
+pygame.init()
+
+screen = pygame.display.set_mode([500, 500])
+
+running = True
+while running:
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+
+    screen.fill((225, 225, 225))
+
+    pygame.draw.circle(screen, (0, 0, 225), (250, 250), 75)
+
+    pygame.display.flip()
+
+pygame.quit()
