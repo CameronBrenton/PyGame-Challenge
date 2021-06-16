@@ -74,6 +74,9 @@ pygame.init()
         
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+ADDENEMY = pygame.USEREVENT + 1
+pygame.time.set_timer(ADDENEMY, 250)
+
 player = Player()
 
 enemies = pygame.sprite.Group()
@@ -91,6 +94,11 @@ while running:
                 running = False
         elif event.type == QUIT:
             running = False
+
+        elif event.type == ADDENEMY:
+            new_enemy = Enemy()
+            enemies.add(new_enemy)
+            all_sprites.add(new_enemy)
 
     pressed_keys = pygame.key.get_pressed()
 
