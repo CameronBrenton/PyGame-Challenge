@@ -101,13 +101,18 @@ while running:
             all_sprites.add(new_enemy)
 
     pressed_keys = pygame.key.get_pressed()
-
     player.update(pressed_keys)
+
+    enemies.update()
 
     screen.fill((0, 0, 0))
 
     for entity in all_sprites:
         screen.blit(entity.surf, entity.rect)
+
+    if pygame.sprite.spritecollideany(player, enemies):
+        player.kill()
+        running = False
 
     pygame.display.flip()
 
