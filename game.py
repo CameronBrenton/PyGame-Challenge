@@ -10,6 +10,7 @@ try:
     import pygame
     import random
     from pygame.locals import (
+    RLEACCEL,
     K_UP,
     K_DOWN,
     K_LEFT,
@@ -28,8 +29,8 @@ SCREEN_HEIGHT = 600
 class Player(pygame.sprite.Sprite):
     def __init__(self) -> None:
         super(Player, self).__init__()
-        self.surf = pygame.Surface((75, 25))
-        self.surf.fill((225, 225, 225))
+        self.surf = pygame.image.load("birdBluejay.png").convert()
+        self.surf.set_colorkey((225, 225, 225), RLEACCEL)
         self.rect = self.surf.get_rect()
     
     def update(self, pressed_keys):
@@ -88,9 +89,7 @@ while running:
 
     for event in pygame.event.get():
         if event.type == KEYDOWN:
-            print('Keydown')
             if event.key == K_ESCAPE:
-                print('Quit')
                 running = False
         elif event.type == QUIT:
             running = False
