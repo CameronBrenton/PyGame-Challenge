@@ -50,36 +50,12 @@ class Player(pygame.sprite.Sprite):
         if self.rect.bottom >= SCREEN_HEIGHT:
             self.rect.bottom = SCREEN_HEIGHT
 
-class Rectangle:
-    def __init__(self, length, width):
-        self.length = length
-        self.width = width
-
-    def area(self):
-        return self.length * self.width
-
-    def perimeter(self):
-        return 2 * self.length + 2 * self.width
-
-class Square:
-    def __init__(self, length):
-        self.length = length
-
-    def area(self):
-        return self.length * self.length
-
-    def perimeter(self):
-        return 4 * self.length
-        
-
 
 pygame.init()
         
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 player = Player()
-square = Square(4)
-rectangle = Rectangle(2, 4)
 
 running = True
 while running:
@@ -87,9 +63,6 @@ while running:
     for event in pygame.event.get():
         if event.type == KEYDOWN:
             print('Keydown')
-            if event.key == K_UP:
-                print(square.area())
-                print(rectangle.perimeter())
             if event.key == K_ESCAPE:
                 print('Quit')
                 running = False
