@@ -30,6 +30,16 @@ class Player(pygame.sprite.Sprite):
         self.surf = pygame.Surface((75, 25))
         self.surf.fill((225, 225, 225))
         self.rect = self.surf.get_rect()
+    
+    def update(self, pressed_keys):
+        if pressed_keys[K_UP]:
+            self.rect.move_ip(0, -5)
+        if pressed_keys[K_DOWN]:
+            self.rect.move_ip(0, 5)
+        if pressed_keys[K_LEFT]:
+            self.rect.move_ip(-5, 0)
+        if pressed_keys[K_RIGHT]:
+            self.rect.move_ip(5, 0)
 
 class Rectangle:
     def __init__(self, length, width):
@@ -77,6 +87,8 @@ while running:
         elif event.type == QUIT:
             running = False
 
+    pressed_keys = pygame.key.get_pressed()
+
     screen.fill((0, 0, 0))
 
     surf_center = (
@@ -84,7 +96,7 @@ while running:
        (SCREEN_HEIGHT-player.surf.get_height())/2
     )
 
-    screen.blit(player.surf, surf_center)
+    screen.blit(player.surf, player.rect)
 
     pygame.display.flip()
 
