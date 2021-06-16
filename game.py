@@ -41,6 +41,15 @@ class Player(pygame.sprite.Sprite):
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(5, 0)
 
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > SCREEN_WIDTH:
+            self.rect.right = SCREEN_WIDTH
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= SCREEN_HEIGHT:
+            self.rect.bottom = SCREEN_HEIGHT
+
 class Rectangle:
     def __init__(self, length, width):
         self.length = length
@@ -88,6 +97,8 @@ while running:
             running = False
 
     pressed_keys = pygame.key.get_pressed()
+
+    player.update(pressed_keys)
 
     screen.fill((0, 0, 0))
 
