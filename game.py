@@ -23,7 +23,18 @@ except ImportError as err:
 
 pygame.init()
 
-screen = pygame.display.set_mode([500, 500])
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self) -> None:
+        super(Player, self).__init__()
+        self.surf = pygame.Surface((75, 25))
+        self.surf.fill((225, 225, 225))
+        self.rect = self.surf.get_rect()
 
 running = True
 while running:
@@ -39,7 +50,17 @@ while running:
 
     screen.fill((225, 225, 225))
 
-    pygame.draw.circle(screen, (52, 235, 192), (250, 250), 75)
+    surf = pygame.Surface((50, 50))
+
+    surf.fill((0, 0, 0))
+    rect = surf.get_rect()
+
+    surf_center = (
+       (SCREEN_WIDTH-surf.get_width())/2,
+       (SCREEN_HEIGHT-surf.get_height())/2
+    )
+
+    screen.blit(surf, surf_center)
 
     pygame.display.flip()
 
