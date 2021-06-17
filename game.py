@@ -1,7 +1,10 @@
 # game.py
 #
-# Cameron's Super-Fun Game
-# Just a simple (and hopefully) fun game
+# Title: BlueJay
+# 
+# Just a simple (and hopefully) fun game where you play as a bluejay
+# flying through the air. The goal is to stay alive for as long as possible
+# by not colliding with any other birds or objects!
 #
 VERSION = "0.1"
 
@@ -35,20 +38,32 @@ class Player(pygame.sprite.Sprite):
         self.change_y = 0
 
         self.flying_frames_r = []
-        self.flying_frames_up = []
-        self.flying_frames_down = []
+        self.flying_frames_l = []
+        self.flying_frames_u = []
+        self.flying_frames_d = []
 
         self.direction = "R"
  
+        # Flying frames 'right'
         sprite_sheet = SpriteSheet("bluejaySpritesheet.png")
         image = sprite_sheet.getImage(0, 90, 30, 30)
+        pygame.transform.scale(image, (60, 60), DestSurface = None)
         self.flying_frames_r.append(image)
         image = sprite_sheet.getImage(30, 90, 30, 30)
         self.flying_frames_r.append(image)
         image = sprite_sheet.getImage(60, 90, 30, 30)
         self.flying_frames_r.append(image)
 
-  
+        # Flying frames 'left'
+        image = sprite_sheet.getImage(0, 0, 30, 30)
+        self.flying_frames_l.append(image)
+        image = sprite_sheet.getImage(30, 0, 30, 30)
+        self.flying_frames_l.append(image)
+        image = sprite_sheet.getImage(60, 0, 30, 30)
+        self.flying_frames_l.append(image)
+
+        # Flying frames 'down'
+
 
         self.image = self.flying_frames_r[0]
 
@@ -60,6 +75,9 @@ class Player(pygame.sprite.Sprite):
         if self.direction == "R":
             frame = (pos // 30) % len(self.flying_frames_r)
             self.image = self.flying_frames_r[frame]
+        if self.direction == "L":
+            frame = (pos // 30) % len(self.flying_frames_l)
+            self.image = self.flying_frames_l[frame]
 
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -1)
@@ -67,8 +85,14 @@ class Player(pygame.sprite.Sprite):
             self.rect.move_ip(0, 1)
         if pressed_keys[K_LEFT]:
             self.rect.move_ip(-1, 0)
+            self.direction = "L"
         if pressed_keys[K_RIGHT]:
             self.rect.move_ip(1, 0)
+            self.direction = "R"
+        
+
+        
+        
 
         if self.rect.left < 0:
             self.rect.left = 0
@@ -85,8 +109,8 @@ class Enemy(pygame.sprite.Sprite):
 
         self.flying_frames_l = []
 
-        self. direction = "L"
-        
+        self.direction = "L"
+
         sprite_sheet = SpriteSheet("redjaySpritesheet.png")
         image = sprite_sheet.getImage(0, 0, 30, 30)
         self.flying_frames_l.append(image)
@@ -94,6 +118,7 @@ class Enemy(pygame.sprite.Sprite):
         self.flying_frames_l.append(image)
         image = sprite_sheet.getImage(60, 0, 30, 30)
         self.flying_frames_l.append(image)
+
 
         self.image = self.flying_frames_l[0]
         
