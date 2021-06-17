@@ -27,7 +27,6 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 class Player(pygame.sprite.Sprite):
-
     def __init__(self) -> None:
         super(Player, self).__init__()
 
@@ -38,10 +37,6 @@ class Player(pygame.sprite.Sprite):
         self.flying_frames_r = []
 
         self. direction = "R"
-
-        #self.surf = pygame.image.load("birdBluejay.png").convert()
-        #self.surf.set_colorkey((225, 225, 225), RLEACCEL)
-        #self.rect = self.surf.get_rect()
  
         sprite_sheet = SpriteSheet("bluejaySpritesheet.png")
         image = sprite_sheet.getImage(0, 0, 66, 90)
@@ -63,6 +58,7 @@ class Player(pygame.sprite.Sprite):
 
         self.image = self.flying_frames_r[0]
 
+        self.image.set_colorkey((225, 225, 225), RLEACCEL)
         self.rect = self.image.get_rect()
    
     def update(self, pressed_keys):
@@ -87,7 +83,22 @@ class Player(pygame.sprite.Sprite):
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super(Enemy, self).__init__()
-        self.image = pygame.image.load("birdRedjay.png").convert()
+
+        self.flying_frames_l = []
+
+        self. direction = "L"
+        
+        sprite_sheet = SpriteSheet("redjaySpritesheet.png")
+        image = sprite_sheet.getImage(0, 0, 66, 90)
+        self.flying_frames_l.append(image)
+        image = sprite_sheet.getImage(66, 0, 66, 90)
+        self.flying_frames_l.append(image)
+        image = sprite_sheet.getImage(132, 0, 67, 90)
+        self.flying_frames_l.append(image)
+
+        self.image = self.flying_frames_l[0]
+        
+
         self.image.set_colorkey((225, 225, 225), RLEACCEL)
         self.rect = self.image.get_rect(
             center=(
