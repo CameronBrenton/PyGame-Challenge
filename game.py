@@ -195,6 +195,9 @@ enemies = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
+
+
+
 start = False
 while start == False:
     screen.fill((0, 0, 0))
@@ -209,7 +212,8 @@ while start == False:
 
     screen.blit(label, (230, 200))
     screen.blit(label2, (200, 400))
-    pygame.display.flip()
+    pygame.display.flip()  
+
 
 running = True
 while running:
@@ -222,6 +226,7 @@ while running:
 
         elif event.type == QUIT:
             running = False
+            pygame.quit()
         
 
         elif event.type == ADDENEMY:
@@ -242,7 +247,9 @@ while running:
     if pygame.sprite.spritecollideany(player, enemies):
         player.kill()
         running = False
+        
 
     pygame.display.flip()
 
-pygame.quit()
+
+#pygame.quit()
