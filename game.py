@@ -39,14 +39,14 @@ class Player(pygame.sprite.Sprite):
         self. direction = "R"
  
         sprite_sheet = SpriteSheet("bluejaySpritesheet.png")
-        image = sprite_sheet.getImage(0, 0, 66, 90)
+        image = sprite_sheet.getImage(66, 0, 30, 30)
         self.flying_frames_r.append(image)
         image = sprite_sheet.getImage(66, 0, 66, 90)
         self.flying_frames_r.append(image)
         image = sprite_sheet.getImage(132, 0, 67, 90)
         self.flying_frames_r.append(image)
 
-        image = sprite_sheet.getImage(0, 0, 66, 90)
+        image = sprite_sheet.getImage(66, 0, 30, 30)
         image = pygame.transform.flip(image, True, False)
         self.flying_frames_l.append(image)
         image = sprite_sheet.getImage(66, 0, 66, 90)
@@ -56,20 +56,20 @@ class Player(pygame.sprite.Sprite):
         image = pygame.transform.flip(image, True, False)
         self.flying_frames_l.append(image)
 
-        self.image = self.flying_frames_r[0]
+        self.image = self.flying_frames_l[0]
 
         self.image.set_colorkey((225, 225, 225), RLEACCEL)
         self.rect = self.image.get_rect()
    
     def update(self, pressed_keys):
         if pressed_keys[K_UP]:
-            self.rect.move_ip(0, -2)
+            self.rect.move_ip(0, -1)
         if pressed_keys[K_DOWN]:
-            self.rect.move_ip(0, 2)
+            self.rect.move_ip(0, 1)
         if pressed_keys[K_LEFT]:
-            self.rect.move_ip(-2, 0)
+            self.rect.move_ip(-1, 0)
         if pressed_keys[K_RIGHT]:
-            self.rect.move_ip(2, 0)
+            self.rect.move_ip(1, 0)
 
         if self.rect.left < 0:
             self.rect.left = 0
@@ -89,7 +89,7 @@ class Enemy(pygame.sprite.Sprite):
         self. direction = "L"
         
         sprite_sheet = SpriteSheet("redjaySpritesheet.png")
-        image = sprite_sheet.getImage(0, 0, 66, 90)
+        image = sprite_sheet.getImage(0, 0, 30, 30)
         self.flying_frames_l.append(image)
         image = sprite_sheet.getImage(66, 0, 66, 90)
         self.flying_frames_l.append(image)
@@ -106,7 +106,7 @@ class Enemy(pygame.sprite.Sprite):
                 random.randint(0, SCREEN_HEIGHT),
             )
         )
-        self.speed = random.randint(1, 2)
+        self.speed = random.randint(1, 1)
 
     def update(self):
         self.rect.move_ip(-self.speed, 0)
