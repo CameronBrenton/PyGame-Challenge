@@ -18,6 +18,7 @@ try:
     K_ESCAPE,
     KEYDOWN,
     QUIT,
+
 )
 except ImportError as err:
     print(f"couldn't load module. {err}")
@@ -33,35 +34,33 @@ class Player(pygame.sprite.Sprite):
         self.change_x = 0
         self.change_y = 0
 
-        self.flying_frames_l = []
         self.flying_frames_r = []
+        self.flying_frames_up = []
+        self.flying_frames_down = []
 
-        self. direction = "R"
+        self.direction = "R"
  
         sprite_sheet = SpriteSheet("bluejaySpritesheet.png")
-        image = sprite_sheet.getImage(66, 0, 30, 30)
+        image = sprite_sheet.getImage(0, 90, 30, 30)
         self.flying_frames_r.append(image)
-        image = sprite_sheet.getImage(66, 0, 66, 90)
+        image = sprite_sheet.getImage(30, 90, 30, 30)
         self.flying_frames_r.append(image)
-        image = sprite_sheet.getImage(132, 0, 67, 90)
+        image = sprite_sheet.getImage(60, 90, 30, 30)
         self.flying_frames_r.append(image)
 
-        image = sprite_sheet.getImage(66, 0, 30, 30)
-        image = pygame.transform.flip(image, True, False)
-        self.flying_frames_l.append(image)
-        image = sprite_sheet.getImage(66, 0, 66, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.flying_frames_l.append(image)
-        image = sprite_sheet.getImage(132, 0, 67, 90)
-        image = pygame.transform.flip(image, True, False)
-        self.flying_frames_l.append(image)
+  
 
-        self.image = self.flying_frames_l[0]
+        self.image = self.flying_frames_r[0]
 
         self.image.set_colorkey((225, 225, 225), RLEACCEL)
         self.rect = self.image.get_rect()
    
     def update(self, pressed_keys):
+        pos = self.rect.x
+        if self.direction == "R":
+            frame = (pos // 30) % len(self.flying_frames_r)
+            self.image = self.flying_frames_r[frame]
+
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -1)
         if pressed_keys[K_DOWN]:
@@ -91,14 +90,13 @@ class Enemy(pygame.sprite.Sprite):
         sprite_sheet = SpriteSheet("redjaySpritesheet.png")
         image = sprite_sheet.getImage(0, 0, 30, 30)
         self.flying_frames_l.append(image)
-        image = sprite_sheet.getImage(66, 0, 66, 90)
+        image = sprite_sheet.getImage(30, 0, 30, 30)
         self.flying_frames_l.append(image)
-        image = sprite_sheet.getImage(132, 0, 67, 90)
+        image = sprite_sheet.getImage(60, 0, 30, 30)
         self.flying_frames_l.append(image)
 
         self.image = self.flying_frames_l[0]
         
-
         self.image.set_colorkey((225, 225, 225), RLEACCEL)
         self.rect = self.image.get_rect(
             center=(
@@ -109,9 +107,13 @@ class Enemy(pygame.sprite.Sprite):
         self.speed = random.randint(1, 1)
 
     def update(self):
+        pos = self.rect.x
         self.rect.move_ip(-self.speed, 0)
         if self.rect.right < 0:
             self.kill()
+        if self.direction == "L":
+            frame = (pos // 30) % len(self.flying_frames_l)
+            self.image = self.flying_frames_l[frame]
 
 #class Cloud(pygame.sprite.Sprite):
 #    def __init__(self) -> None:
