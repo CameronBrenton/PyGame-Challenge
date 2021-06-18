@@ -49,42 +49,42 @@ class Player(pygame.sprite.Sprite):
         sprite_sheet = SpriteSheet("bluejaySpritesheet.png")
 
         # Flying frames 'right'
-        image = sprite_sheet.getImage(0, 90, 30, 30)
+        image = sprite_sheet.getImage(0, 96, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_r.append(image)
-        image = sprite_sheet.getImage(30, 90, 30, 30)
+        image = sprite_sheet.getImage(32, 96, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_r.append(image)
-        image = sprite_sheet.getImage(60, 90, 30, 30)
+        image = sprite_sheet.getImage(64, 96, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_r.append(image)
 
         # Flying frames 'left'
-        image = sprite_sheet.getImage(0, 0, 30, 30)
+        image = sprite_sheet.getImage(0, 0, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_l.append(image)
-        image = sprite_sheet.getImage(30, 0, 30, 30)
+        image = sprite_sheet.getImage(32, 0, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_l.append(image)
-        image = sprite_sheet.getImage(60, 0, 30, 30)
+        image = sprite_sheet.getImage(64, 0, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_l.append(image)
 
         # Flying frames 'down'
-        image = sprite_sheet.getImage(0, 90, 30, 30)
+        image = sprite_sheet.getImage(0, 96, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_d.append(image)
-        image = sprite_sheet.getImage(30, 90, 30, 30)
+        image = sprite_sheet.getImage(32, 96, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_d.append(image)
-        image = sprite_sheet.getImage(60, 90, 30, 30)
+        image = sprite_sheet.getImage(64, 96, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_d.append(image)
 
 
         self.image = self.flying_frames_r[0]
 
-        self.image.set_colorkey((225, 225, 225), RLEACCEL)
+        self.image.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = self.image.get_rect()
    
     def update(self, pressed_keys):
@@ -112,8 +112,6 @@ class Player(pygame.sprite.Sprite):
             self.rect.move_ip(1, 0)
             self.direction = "R"
         
-
-        
         
 
         if self.rect.left < 0:
@@ -135,20 +133,20 @@ class Enemy(pygame.sprite.Sprite):
 
         sprite_sheet = SpriteSheet("redjaySpritesheet.png")
 
-        image = sprite_sheet.getImage(0, 0, 30, 30)
+        image = sprite_sheet.getImage(0, 0, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_l.append(image)
-        image = sprite_sheet.getImage(30, 0, 30, 30)
+        image = sprite_sheet.getImage(30, 0, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_l.append(image)
-        image = sprite_sheet.getImage(60, 0, 30, 30)
+        image = sprite_sheet.getImage(60, 0, 32, 32)
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_l.append(image)
 
 
         self.image = self.flying_frames_l[0]
         
-        self.image.set_colorkey((225, 225, 225), RLEACCEL)
+        self.image.set_colorkey((0, 0, 0), RLEACCEL)
         self.rect = self.image.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
@@ -166,10 +164,23 @@ class Enemy(pygame.sprite.Sprite):
             frame = (pos // 30) % len(self.flying_frames_l)
             self.image = self.flying_frames_l[frame]
 
-#class Cloud(pygame.sprite.Sprite):
-#    def __init__(self) -> None:
-#        super(Cloud, self).__init__()
-#        self.surf = pygame.image.load
+class Cloud(pygame.sprite.Sprite):
+    def __init__(self) -> None:
+        super(Cloud, self).__init__()
+        self.image = pygame.image.load("cloud1.png").convert()
+        self.image.set_colorkey((255, 255, 255), RLEACCEL)
+        #self.image = pygame.transform.scale(self.image, (300 , 90))
+        self.rect = self.image.get_rect( 
+            center=(
+                random.randint(SCREEN_WIDTH + 10, SCREEN_WIDTH + 10),
+                random.randint(0, 300),
+            )
+        )
+
+    def update(self):
+        self.rect.move_ip(-1, 0)
+        if self.rect.right < 0:
+            self.kill()
 
 class SpriteSheet():
     sprite_sheet = None
@@ -179,7 +190,7 @@ class SpriteSheet():
     def getImage(self, x, y, width, height):
         image = pygame.Surface([width, height]).convert()
         image.blit(self.sprite_sheet, (0, 0), (x, y, width, height))
-        image.set_colorkey((225, 225, 225), RLEACCEL)
+        image.set_colorkey((0, 0, 0), RLEACCEL)
         return image
 
 pygame.init()
@@ -187,11 +198,15 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 ADDENEMY = pygame.USEREVENT + 1
-pygame.time.set_timer(ADDENEMY, 250)
+pygame.time.set_timer(ADDENEMY, 300)
+  
+ADDCLOUD = pygame.USEREVENT + 2
+pygame.time.set_timer(ADDCLOUD, 3000)
 
 player = Player()
 
 enemies = pygame.sprite.Group()
+clouds = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
@@ -209,6 +224,9 @@ while start == False:
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
                 start = True
+        elif event.type == QUIT:
+            running = False
+            pygame.quit()
 
     screen.blit(label, (230, 200))
     screen.blit(label2, (200, 400))
@@ -222,7 +240,6 @@ while running:
         if event.type == KEYDOWN:
             if event.key == K_ESCAPE:
                 running = False
-        #if event.key == KEYUP:
 
         elif event.type == QUIT:
             running = False
@@ -234,12 +251,18 @@ while running:
             enemies.add(new_enemy)
             all_sprites.add(new_enemy)
 
+        elif event.type == ADDCLOUD:
+             newCloud = Cloud()
+             clouds.add(newCloud)
+             all_sprites.add(newCloud)
+
     pressed_keys = pygame.key.get_pressed()
     player.update(pressed_keys)
 
     enemies.update()
+    clouds.update()
 
-    screen.fill((0, 0, 0))
+    screen.fill((135, 206, 250))
 
     for entity in all_sprites:
         screen.blit(entity.image, entity.rect)
