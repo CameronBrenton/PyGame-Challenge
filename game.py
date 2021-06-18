@@ -6,8 +6,8 @@
 # flying through the air. The goal is to stay alive for as long as possible
 # by not colliding with any other birds or objects!
 #
-# Many thanks to bluecarrot16 at https://opengameart.org/content/lpc-birds for providing the awesome spritesheets
-# 
+# Many thanks to bluecarrot16 at https://opengameart.org/content/lpc-birds for providing the awesome bird spritesheets
+# Many thanks to hassekf https://opengameart.org/content/2d-clouds-pack for the awesome cloud spritesheets
 #
 VERSION = "0.1"
 
