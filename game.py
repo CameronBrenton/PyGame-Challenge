@@ -29,8 +29,8 @@ except ImportError as err:
     print(f"couldn't load module. {err}")
     sys.exit(2)
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 800
 
 class Player(pygame.sprite.Sprite):
     def __init__(self) -> None:
@@ -70,16 +70,6 @@ class Player(pygame.sprite.Sprite):
         image = pygame.transform.scale(image, (60, 60))
         self.flying_frames_l.append(image)
 
-        # Flying frames 'down'
-        image = sprite_sheet.getImage(0, 96, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
-        self.flying_frames_d.append(image)
-        image = sprite_sheet.getImage(32, 96, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
-        self.flying_frames_d.append(image)
-        image = sprite_sheet.getImage(64, 96, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
-        self.flying_frames_d.append(image)
 
 
         self.image = self.flying_frames_r[0]
@@ -169,7 +159,6 @@ class Cloud(pygame.sprite.Sprite):
         super(Cloud, self).__init__()
         self.image = pygame.image.load("cloud1.png").convert()
         self.image.set_colorkey((255, 255, 255), RLEACCEL)
-        #self.image = pygame.transform.scale(self.image, (300 , 90))
         self.rect = self.image.get_rect( 
             center=(
                 random.randint(SCREEN_WIDTH + 10, SCREEN_WIDTH + 10),
@@ -228,8 +217,8 @@ while start == False:
             running = False
             pygame.quit()
 
-    screen.blit(label, (230, 200))
-    screen.blit(label2, (200, 400))
+    screen.blit(label, (475, 200))
+    screen.blit(label2, (450, 300))
     pygame.display.flip()  
 
 
