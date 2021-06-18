@@ -6,6 +6,9 @@
 # flying through the air. The goal is to stay alive for as long as possible
 # by not colliding with any other birds or objects!
 #
+# Many thanks to bluecarrot16 at https://opengameart.org/content/lpc-birds for providing the awesome spritesheets
+# 
+#
 VERSION = "0.1"
 
 try:
@@ -50,26 +53,27 @@ class Player(pygame.sprite.Sprite):
 
         # Flying frames 'right'
         image = sprite_sheet.getImage(0, 96, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (96, 96))
         self.flying_frames_r.append(image)
         image = sprite_sheet.getImage(32, 96, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (96, 96))
         self.flying_frames_r.append(image)
         image = sprite_sheet.getImage(64, 96, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (96, 96))
         self.flying_frames_r.append(image)
 
         # Flying frames 'left'
         image = sprite_sheet.getImage(0, 0, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (96, 96))
         self.flying_frames_l.append(image)
         image = sprite_sheet.getImage(32, 0, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (96, 96))
         self.flying_frames_l.append(image)
         image = sprite_sheet.getImage(64, 0, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (96, 96))
         self.flying_frames_l.append(image)
 
+        
 
 
         self.image = self.flying_frames_r[0]
@@ -85,16 +89,14 @@ class Player(pygame.sprite.Sprite):
         if self.direction == "L":
             frame = (pos // 30) % len(self.flying_frames_l)
             self.image = self.flying_frames_l[frame]
-        if self.direction == "D":
-            frame = (pos // 30) % len(self.flying_frames_d)
-            self.image = self.flying_frames_d[frame]
+        
             
         if pressed_keys[K_UP]:
             self.rect.move_ip(0, -1)
             self.direction = "R"
         if pressed_keys[K_DOWN]:
             self.rect.move_ip(0, 1)
-            self.direction = "D"
+            self.direction = "R"
         if pressed_keys[K_LEFT]:
             self.rect.move_ip(-1, 0)
             self.direction = "L"
@@ -124,13 +126,13 @@ class Enemy(pygame.sprite.Sprite):
         sprite_sheet = SpriteSheet("redjaySpritesheet.png")
 
         image = sprite_sheet.getImage(0, 0, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (96, 96))
         self.flying_frames_l.append(image)
         image = sprite_sheet.getImage(30, 0, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (96, 96))
         self.flying_frames_l.append(image)
         image = sprite_sheet.getImage(60, 0, 32, 32)
-        image = pygame.transform.scale(image, (60, 60))
+        image = pygame.transform.scale(image, (96, 96))
         self.flying_frames_l.append(image)
 
 
@@ -187,7 +189,7 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 ADDENEMY = pygame.USEREVENT + 1
-pygame.time.set_timer(ADDENEMY, 300)
+pygame.time.set_timer(ADDENEMY, 350)
   
 ADDCLOUD = pygame.USEREVENT + 2
 pygame.time.set_timer(ADDCLOUD, 3000)
@@ -209,6 +211,8 @@ while start == False:
     label = font.render(f"Welcome to BlueJay!", True, (0, 140, 253))
     font2 = pygame.font.Font('freesansbold.ttf', 32)
     label2 = font2.render(f"Press SPACEBAR to start", True, (0, 140, 253))
+    font3 = pygame.font.Font('freesansbold.ttf', 32)
+    label3 = font3.render(f"Press the arrow keys to move", True, (0, 140, 253))
     for event in pygame.event.get():
         if event.type == KEYDOWN:
             if event.key == K_SPACE:
@@ -219,6 +223,7 @@ while start == False:
 
     screen.blit(label, (475, 200))
     screen.blit(label2, (450, 300))
+    screen.blit(label3, (425, 400))
     pygame.display.flip()  
 
 
