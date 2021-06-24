@@ -1,15 +1,3 @@
-# game.py
-#
-# Title: BlueJay
-# Cameron's Super-Fun BlueJay Game
-# Just a simple (and hopefully) fun game where you play as a bluejay
-# flying through the air. The goal is to stay alive for as long as possible
-# by not colliding with any other birds or objects!
-#
-# Many thanks to Jon Fincher at https://realpython.com/pygame-a-primer/ for the tutorial who pretty much guides me through this whole thing! 
-# Many thanks to bluecarrot16 at https://opengameart.org/content/lpc-birds for providing the awesome bird spritesheets
-# Many thanks to hassekf https://opengameart.org/content/2d-clouds-pack for the awesome cloud spritesheets
-#
 VERSION = "0.1"
 
 try:
